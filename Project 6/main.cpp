@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
                 //Demo code typed in 3/10/2021 lecture.  May or may not be useful for
 		//actual program.          
                 //A instruction with a variable (symbol)
-		instruction_type = stoi(line[0]);                                  
+                   instruction_type = stoi(line[0]);                                  
                    if (instruction_type == 0)
                     {
 			symbols[line[2]] = program_counter;
@@ -93,9 +93,6 @@ int main(int argc, char* argv[])
             string destout = "000";
             //get instruction type 
             instruction_type = stoi(line[0]);            
-            if (instruction_type == 3){
-                destbits = line[2];
-            }
             if (instruction_type == 2)
 		{			
                     output << convertToBin(symbols[line[3]]) << endl;
@@ -105,13 +102,15 @@ int main(int argc, char* argv[])
                 int inValue = stoi(line[3]);
                 output << convertToBin(inValue) << endl;
             }
-            if (instruction_type == 3 || instruction_type == 4){  
+            if (instruction_type == 3 || instruction_type == 4){                 
                 if (instruction_type == 3){
+                    destbits = line[2];
                     compbits = line[3];
                 }
                 else if (instruction_type == 4){
                     compbits = line[2];
                     jumpbits = line[3];
+                    destbits = line[3];
                 }
                 //check c bits 
                 if(compbits == "0")
@@ -124,15 +123,23 @@ int main(int argc, char* argv[])
                 }
                 else if(compbits == "-1")
                 {
-                    compout  = "1110111111";
+                    compout  = "1110111010";
                 }
                 else if(compbits == "D")
                 {
                     compout  = "1110001100";
                 }
+                else if(compbits == "-D")
+                {
+                    compout  = "1110001111";
+                }
                 else if(compbits == "A")
                 {
                     compout  = "1110110000";
+                }
+                else if(compbits == "-A")
+                {
+                    compout  = "1110110011";
                 }
                 else if(compbits ==  "!D")
                 {
@@ -290,7 +297,7 @@ int main(int argc, char* argv[])
                     else if (destbits == "AD"){
                         destout = "110";
                     }
-                    else if (destbits == "ADM"){
+                    else if (destbits == "AMD"){
                         destout = "111";
                     }
                     else{
